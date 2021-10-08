@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Welcome {{user.first_name}}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="full">
+        <nav id="navy" class="navbar sticky-top navbar navbar-expand-lg navbar-dark bg-dark navbar-rounded shadow">
+            <h1>Coding Dojo Wall</h1>
+            <h2>Welcome {{user.first_name}}!</h2>
+            <h5><a href="/logout">Logout</a></h5>
+        </nav>
+        <div class="post">
+            <form action="post" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="md-form">
+                            <textarea type="text" id="post" name="content" rows="2" class="form-control md-textarea" placeholder="What's on your mind?"></textarea>
+                        </div>
+                        <button id="button" type="submit">Post</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="allPosts">
+            <h2>Posts</h2>
+                {% for message in all_messages %}
+                    <h3 id="postHeader">Posted By: {{message.poster.first_name}}  {{message.poster.last_name}} on {{message.created_at}}</h3>
+                    <h5 id="postContent">{{message.content}}</h5>
+                    {% if message.poster.id == request.session.user %}
+                    <a href="/wall/{{message.id}}/delete">Delete Post</a>
+                    {% endif %}
+                    {% for comment in message.comments.all %}
+                    <p>Commented By: {{comment.poster.first_name}}  {{comment.poster.last_name}} on {{comment.created_at}}</p>
+                    <p>{{comment.content}}</p>
+                    {% endfor %}
+                    <div class="comment">
+                        <form action="comment" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="md-form">
+                                        <textarea type="text" id="comment" name="content" rows="2" class="form-control md-textarea" placeholder="What do you think?"></textarea>
+                                        <input type="hidden" name="message" value="{{message.id}}">
+                                    </div>
+                                    <button id="button" type="submit">Post</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>    
+                {% endfor %}    
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

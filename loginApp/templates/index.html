@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Registration and Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="full">
+        <nav class="navbar sticky-top navbar navbar-expand-lg navbar-dark bg-dark navbar-rounded shadow">
+            <h1>Registration and Login</h1>
+            {% if messages %}
+            <ul class="messages" id="messages">    
+                {% for message in messages %}    
+                <li id="messages" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                {% endfor %}
+            </ul>
+          {% endif %}
+        </nav>
+        <div class="forms">
+            <div class="col-md-4 mb-md-0 mb-5" id="regForm">
+                <h1>Register</h1>
+                <form action="/register" method="POST" id="registerForm">
+                    {%csrf_token%}
+                            <div class="md-form mb-0">
+                                <label for="" class=""><span id="required">*</span> First Name:</label>
+                                <input type="text"  name="first_name" class="form-control">
+                            </div>
+                            <div class="md-form mb-0">
+                                <label for="" class=""><span id="required">*</span> Last Name:</label>
+                                <input type="text"  name="last_name" class="form-control">
+                            </div>
+                            <div class="md-form mb-0">
+                                <label for="" class=""><span id="required">*</span> Email Address:</label>
+                                <input type="text"  name="email_address" placeholder="example@email.com" class="form-control">
+                            </div>
+                            <div class="md-form mb-0">
+                                <label for="" class=""><span id="required">*</span> Password:</label>
+                                <input type="password"  name="password" class="form-control">
+                            </div>  
+                            <div class="md-form mb-0">
+                                <label for="" class=""><span id="required">*</span> Confirm Password:</label>
+                                <input type="password"  name="confirm_password" class="form-control">
+                            </div>             
+                            <button id="button" type="submit">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-4 mb-md-0 mb-5" id="logForm">
+                <h1>Login</h1>
+                <form action="/login" method="POST" id="loginForm">
+                    {%csrf_token%}
+                    <div class="md-form mb-0">
+                        <label for="" class=""><span id="required">*</span> Email Address:</label>
+                        <input type="text" name="log_email_address" placeholder="example@email.com" class="form-control">
+                    </div>
+                    <div class="md-form mb-0">
+                        <label for="" class=""><span id="required">*</span> Password:</label>
+                        <input type="password"  name="log_password" class="form-control">
+                    </div>  
+                            <button id="button" type="submit">Login</button>
+                        </form>
+                    </div>
+                </div>
+    </div>
+</body>
+</html>
