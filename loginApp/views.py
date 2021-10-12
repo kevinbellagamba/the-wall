@@ -52,7 +52,6 @@ def success(request):
     }
     return redirect('/wall')
     
-
 def logout(request):
     request.session.flush()
     return redirect('/')
