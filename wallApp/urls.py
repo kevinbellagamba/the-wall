@@ -6,5 +6,5 @@ urlpatterns = [
     path('', views.wallIndex),
     path('post', views.createPost),
     path('comment', views.createComment),
-    path('<int:message_id>/delete', views.deleteMessage)
+    path('<int:message_id>/delete', views.deleteMessage),
 ]
